@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EarnRewards - Earn Coins & Cashout</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="login-container">
+            <div class="logo">
+                <h1>Earn<span>Rewards</span></h1>
+                <p>Earn coins, redeem cash!</p>
+            </div>
+            <div class="login-card">
+                <h2>Welcome Back!</h2>
+                <p>Sign in to start earning</p>
+                <button id="googleSignIn" class="google-btn">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+                    Continue with Google
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboardScreen" class="screen">
+        <div class="header">
+            <div class="header-content">
+                <h2>EarnRewards</h2>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- User Info Card -->
+            <div class="card user-card">
+                <div class="user-info">
+                    <div class="avatar">
+                        <span id="userInitials"></span>
+                    </div>
+                    <div class="user-details">
+                        <h3 id="userName"></h3>
+                        <p id="userEmail"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coins Card -->
+            <div class="card coins-card">
+                <div class="coins-display">
+                    <span class="coins-label">Total Coins</span>
+                    <div class="coins-value-wrapper">
+                        <span class="coins-icon">🪙</span>
+                        <span id="totalCoins" class="coins-value">0</span>
+                    </div>
+                    <div class="inr-value">
+                        <span>≈ ₹<span id="inrValue">0.00</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Referral Card -->
+            <div class="card referral-card">
+                <div class="referral-header">
+                    <span>Your Referral Code</span>
+                    <button id="copyReferral" class="copy-btn">Copy</button>
+                </div>
+                <div class="referral-code" id="referralCode">LOADING...</div>
+                <p class="referral-info">Share your code & earn 50 coins per referral!</p>
+            </div>
+
+            <!-- Earnings Grid -->
+            <div class="grid-2">
+                <!-- Daily Check-in -->
+                <div class="card action-card" id="checkinCard">
+                    <div class="action-icon">📅</div>
+                    <h3>Daily Check-in</h3>
+                    <p class="reward">+20 Coins</p>
+                    <button id="checkinBtn" class="action-btn">Check In</button>
+                    <span id="checkinStatus" class="status-text"></span>
+                </div>
+
+                <!-- Spin to Earn -->
+                <div class="card action-card" id="spinCard">
+                    <div class="action-icon">🎡</div>
+                    <h3>Spin to Earn</h3>
+                    <p class="reward">5-50 Coins</p>
+                    <div class="spin-count">
+                        <span id="spinsLeft">50</span> spins left
+                    </div>
+                    <button id="spinBtn" class="action-btn">Spin</button>
+                </div>
+            </div>
+
+            <!-- Tasks Section -->
+            <div class="card tasks-card">
+                <h3>Daily Tasks</h3>
+                <div class="tasks-progress">
+                    <span>Tasks Completed: <span id="tasksCompleted">0</span>/50</span>
+                    <div class="progress-bar">
+                        <div id="tasksProgress" class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="task-item">
+                    <div class="task-info">
+                        <span class="task-icon">✓</span>
+                        <span>Complete Simple Task</span>
+                    </div>
+                    <div class="task-reward">+10 Coins</div>
+                    <button id="taskBtn" class="task-action-btn">Do Task</button>
+                </div>
+                <p id="taskMessage" class="task-message"></p>
+            </div>
+
+            <!-- Withdrawal Section -->
+            <div class="card withdrawal-card">
+                <h3>Withdraw Earnings</h3>
+                <p class="min-withdrawal">Minimum: 1000 Coins (₹10)</p>
+                <div class="withdrawal-form">
+                    <input type="text" id="upiId" placeholder="Enter UPI ID" class="upi-input">
+                    <div class="withdrawal-info">
+                        <span>Available: <span id="availableCoins">0</span> Coins</span>
+                        <span>= ₹<span id="convertInr">0.00</span></span>
+                    </div>
+                    <button id="withdrawBtn" class="withdraw-btn">Request Withdrawal</button>
+                </div>
+                <p id="withdrawMessage" class="withdraw-message"></p>
+            </div>
+        </div>
+
+        <!-- Adsterra Banner -->
+        <div class="ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'fc197ad9c7c3213e06e1baeee7861024',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="https://www.highperformanceformat.com/fc197ad9c7c3213e06e1baeee7861024/invoke.js"></script>
+        </div>
+    </div>
+
+    <!-- Coin Animation Container -->
+    <div id="coinAnimation" class="coin-animation"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
